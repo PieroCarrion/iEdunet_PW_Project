@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+
+	<persistence-unit name="iEdunetPU"
+		transaction-type="JTA">
+		<jta-data-source>java:/iEdunetDS</jta-data-source>
+		<class>pe.edu.upc.iedunet.models.entities.ActividadAcademica</class>
+		<class>pe.edu.upc.iedunet.models.entities.Alumno</class>
+		<class>pe.edu.upc.iedunet.models.entities.AlumnoClase</class>
+		<class>pe.edu.upc.iedunet.models.entities.Calificacion</class>
+		<class>pe.edu.upc.iedunet.models.entities.Clase</class>
+		<class>pe.edu.upc.iedunet.models.entities.Colegio</class>
+		<class>pe.edu.upc.iedunet.models.entities.Comunicado</class>
+		<class>pe.edu.upc.iedunet.models.entities.Curso</class>
+		<class>pe.edu.upc.iedunet.models.entities.Horario</class>
+		<class>pe.edu.upc.iedunet.models.entities.Matricula</class>
+		<class>pe.edu.upc.iedunet.models.entities.Periodo</class>
+		<class>pe.edu.upc.iedunet.models.entities.Profesor</class>
+		<class>pe.edu.upc.iedunet.models.entities.Recurso</class>
+		<class>pe.edu.upc.iedunet.models.entities.Usuario</class>
+		<properties>
+			<property
+				name="javax.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+				<!-- por si se modifica la estructura de la db o recien se crea, poner: drop-and-create -->
+		</properties>
+	</persistence-unit>
+</persistence>

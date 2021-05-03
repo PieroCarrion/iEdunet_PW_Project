@@ -1,0 +1,264 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+		crossorigin="anonymous"></link>
+	<title>CRUD Profesor</title>
+</h:head>
+
+<h:body class="bg-dark">
+	<div class="bg-dark text-white mb-0">
+		<h5>Soporte Técnico</h5>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+		<a class="navbar-brand" href="#"> <img
+			src="https://www.flaticon.com/svg/static/icons/svg/2883/2883921.svg"
+			width="64" height="64" class="d-inline-block align-top" alt=""
+			loading="lazy" />
+		</a>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto mr-auto">
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin" tabindex="-1" aria-disabled="true">Colegios</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/alumnos.xhtml">Alumnos </a></li>
+				<li class="nav-item active"><a class="nav-link h4"
+					href="/iEdunet/e-admin/profesores.xhtml">Profesores</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/cursos.xhtml">Cursos</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/clases.xhtml">Clases</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/matriculas.xhtml">Matrículas</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/periodos.xhtml">Periodos</a></li>
+			</ul>
+		</div>
+		<a class="navbar-brand" href="#"> <img
+			src="https://www.flaticon.com/svg/static/icons/svg/848/848043.svg"
+			width="64" height="64" class="d-inline-block align-top" alt=""
+			loading="lazy" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</nav>
+
+	<div class="container mt-3 ">
+		<div class="row justify-content-center mt-3">
+			<div class="col-12">
+				<h:form id="form-profesor">
+					<p:growl id="growl" life="2000" />
+
+					<p:panelGrid columns="4" id="panel-profesor"
+						style="#{profesorView.stylePanelProfesor}" layout="grid"
+						columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+						contentStyleClass="p-align-baseline ui-fluid">
+
+						<p:outputLabel for="input-dni" value="DNI" />
+						<p:inputText id="input-dni"
+							value="#{profesorView.profesor.usuario.dni}" />
+
+
+						<p:outputLabel for="input-usuario" value="Usuario" />
+						<p:inputText id="input-usuario"
+							value="#{profesorView.profesor.usuario.codigoUsuario}" />
+
+						<p:outputLabel for="input-contraseña" value="Contraseña" />
+						<p:inputText id="input-contraseña"
+							value="#{profesorView.profesor.usuario.password}" />
+
+
+
+						<p:outputLabel for="input-nombre" value="Nombre" />
+						<p:inputText id="input-nombre"
+							value="#{profesorView.profesor.usuario.nombre}" />
+
+
+						<p:outputLabel for="input-apellido" value="Apellido" />
+						<p:inputText id="input-apellido"
+							value="#{profesorView.profesor.usuario.apellido}" />
+
+
+
+
+						<p:outputLabel for="input-email" value="Email" />
+						<p:inputText id="input-email"
+							value="#{profesorView.profesor.usuario.email}" />
+
+
+						<p:outputLabel for="input-telefono" value="Telefono" />
+						<p:inputText id="input-telefono"
+							value="#{profesorView.profesor.usuario.telefono}" />
+
+
+						<p:outputLabel for="input-colegio" value="ID Colegio" />
+						<p:selectOneMenu id="input-colegio"
+							value="#{profesorView.idColegio}">
+							<f:selectItem itemLabel="Selecciona uno" itemValue="0"
+								noSelectionOption="true" />
+							<f:selectItems value="#{profesorView.colegios}" var="colegio"
+								itemLabel="#{colegio.nombre}" itemValue="#{colegio.id}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="input-fechanac" value="Fecha de Nacimiento:" />
+						<p:datePicker id="input-fechanac" pattern="dd/MM/yyyy"
+							yearRange="1960:2030" yearNavigator="true"
+							value="#{profesorView.profesor.usuario.fechaNacimiento}" />
+
+
+
+
+						<p:outputLabel for="input-titulo" value="Titulo" />
+						<p:inputText id="input-titulo"
+							value="#{profesorView.profesor.titulo}" />
+
+
+
+
+					</p:panelGrid>
+					<p:toolbar id="toolbar-profesor">
+						<f:facet name="left">
+							<p:commandButton value="Nuevo" icon="pi pi-file"
+								disabled="#{profesorView.disabledButtonNuevo}"
+								actionListener="#{profesorView.newProfesor()}" update="@form" />
+
+							<p:commandButton value="Grabar" icon="pi pi-save"
+								disabled="#{profesorView.disabledButtonGrabar}"
+								actionListener="#{profesorView.saveProfesor()}" update="@form" />
+
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								disabled="#{profesorView.disabledButtonCancelar}"
+								actionListener="#{profesorView.cancelProfesor()}" update="@form" />
+
+							<p:commandButton value="Editar" icon="pi pi-pencil"
+								disabled="#{profesorView.disabledButtonEditar}"
+								actionListener="#{profesorView.editProfesor()}" update="@form" />
+
+							<p:commandButton value="Eliminar" icon="pi pi-trash"
+								disabled="#{profesorView.disabledButtonEliminar}"
+								action="#{profesorView.deleteProfesor}"
+								update=":form-profesor:table-profesor :form-profesor:toolbar-profesor growl">
+								<p:confirm header="Confirmación"
+									message="Estas seguro que deseas elimininar a: #{profesorView.messageConfirmDialog}?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Si" type="button"
+									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+							</p:confirmDialog>
+						</f:facet>
+
+					</p:toolbar>
+					<p:dataTable id="table-profesor" var="profesor"
+						value="#{profesorView.profesores}" rows="10" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+						rowsPerPageTemplate="10,20,30" selectionMode="single"
+						rowKey="#{profesor.id}" style="#{profesorView.styleTableProfesor}"
+						emptyMessage="No hay profesores encontrados">
+
+						<p:ajax event="rowSelect"
+							listener="#{profesorView.selectProfesor}" update="@form" />
+
+						<p:ajax event="rowSelect"
+							listener="#{profesorView.selectProfesor}" update="@form" />
+
+						<p:ajax event="rowUnselect"
+							listener="#{profesorView.unselectProfesor}" update="@form" />
+
+						<p:column filterBy="#{profesor.usuario.codigoUsuario}"
+							headerText="Código" filterMatchMode="contains" priority="1">
+							<h:outputText value="#{profesor.usuario.codigoUsuario}" />
+						</p:column>
+
+						<p:column filterBy="#{profesor.usuario.dni}" headerText="DNI"
+							filterMatchMode="contains" priority="4">
+							<h:outputText value="#{profesor.usuario.dni}" />
+						</p:column>
+
+
+						<p:column filterBy="#{profesor.usuario.nombre}"
+							headerText="Nombres" filterMatchMode="contains" priority="2">
+
+							<h:outputText value="#{profesor.usuario.nombre}" />
+						</p:column>
+
+						<p:column filterBy="#{profesor.usuario.apellido}"
+							headerText="Apellidos" filterMatchMode="contains" priority="3">
+							<h:outputText value="#{profesor.usuario.apellido}" />
+						</p:column>
+
+						<p:column filterBy="#{profesor.usuario.email}" headerText="Email"
+							filterMatchMode="contains" priority="5">
+							<h:outputText value="#{profesor.usuario.email}" />
+						</p:column>
+
+						<!-- ACA IRIA UN FILTER TIPO COMBO BOX -->
+						<p:column filterBy="#{profesor.usuario.colegio.nombre}"
+							filterMatchMode="startsWith" headerText="Colegio" priority="6">
+							<h:outputText value="#{profesor.usuario.colegio.nombre}" />
+						</p:column>
+
+						<p:column filterBy="#{profesor.titulo}" headerText="Título"
+							filterMatchMode="contains" priority="7">
+							<h:outputText value="#{profesor.titulo}" />
+
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+
+
+	<!--FOOTER-->
+	<footer class="bg-dark">
+		<div class="background-overlay-footer text-white text-center">
+			<div class="container p-3 text-white text-center">
+				<div class="row">
+					<div class="col">
+						<p>© 2020 iEduNet Inc. Todos los derechos reservados. Número
+							de patente 7.493.396 y 7.558.853 de Perú. Resto de patentes en
+							trámite.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<a href="www.facebook.com">Información sobre accesibilidad</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--FOOTER-->
+
+	<!-- ESTE JQUERY ENTRA EN CONFLICTO CON EL JQUERY DE PRIMEFACES
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script> -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
+</h:body>
+</html>

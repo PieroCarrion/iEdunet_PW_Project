@@ -1,0 +1,207 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<link rel="stylesheet"
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+		crossorigin="anonymous"></link>
+</h:head>
+
+<h:body class="bg-dark">
+	<div class="bg-dark text-white mb-0">
+		<h5>Soporte Técnico</h5>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+		<a class="navbar-brand" href="#"> <img
+			src="https://www.flaticon.com/svg/static/icons/svg/2883/2883921.svg"
+			width="64" height="64" class="d-inline-block align-top" alt=""
+			loading="lazy" />
+		</a>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ml-auto mr-auto">
+				<li class="nav-item active"><a class="nav-link h4"
+					href="/iEdunet/e-admin" tabindex="-1" aria-disabled="true">Colegios</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/alumnos.xhtml">Alumnos</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/profesores.xhtml">Profesores</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/cursos.xhtml">Cursos</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/clases.xhtml">Clases</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/matriculas.xhtml">Matrículas</a></li>
+				<li class="nav-item"><a class="nav-link h4"
+					href="/iEdunet/e-admin/periodos.xhtml">Periodos</a></li>
+			</ul>
+		</div>
+		<a class="navbar-brand" href="#"> <img
+			src="https://www.flaticon.com/svg/static/icons/svg/848/848043.svg"
+			width="64" height="64" class="d-inline-block align-top" alt=""
+			loading="lazy" /></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</nav>
+
+	<div class="container mt-3">
+		<div class="row justify-content-center mt-3">
+			<div class="col-12">
+				<h:form id="form-colegio">
+					<p:growl id="growl" life="2000" />
+					<p:panelGrid columns="4" id="panel-colegio"
+						style="#{colegioView.stylePanelColegio}" layout="grid"	
+						columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+						contentStyleClass="p-align-baseline ui-fluid">
+						<p:outputLabel for="input-codigo" value="Codigo" />
+						<p:inputText id="input-codigo"
+							value="#{colegioView.colegio.codigo}" />
+
+						<p:outputLabel for="input-nombre" value="Nombre" />
+						<p:inputText id="input-nombre"
+							value="#{colegioView.colegio.nombre}" />
+
+						<p:outputLabel for="input-pais" value="Pais" />
+						<p:inputText id="input-pais" value="#{colegioView.colegio.pais}" />
+
+						<p:outputLabel for="input-dpto" value="Departamento" />
+						<p:inputText id="input-dpto"
+							value="#{colegioView.colegio.departamento}" />
+
+						<p:outputLabel for="input-direccion" value="Direccion" />
+						<p:inputText id="input-direccion"
+							value="#{colegioView.colegio.direccion}" />
+
+
+					</p:panelGrid>
+					<p:toolbar id = "toolbar-colegio">
+						<f:facet name="left">
+							<p:commandButton value="Nuevo" 
+								icon="pi pi-file" disabled="#{colegioView.disabledButtonNuevo}"
+								actionListener="#{colegioView.newColegio()}" update = "@form" />
+							<p:commandButton value="Guardar" icon="pi pi-save"
+								disabled="#{colegioView.disabledButtonGrabar}"
+								actionListener="#{colegioView.saveColegio()}" update = "@form" />
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								disabled="#{colegioView.disabledButtonCancelar}"
+								actionListener="#{colegioView.cancelColegio()}" update = "@form"/>
+
+							<p:commandButton value="Eliminar" icon="pi pi-trash"
+								disabled="#{colegioView.disabledButtonEliminar}"
+								actionListener="#{colegioView.deleteColegio()}"
+								update=":form-colegio:table-colegio :form-colegio:toolbar-colegio growl">
+								<p:confirm header="Confirmación"
+									message="Estas seguro que deseas eliminar a: #{colegioView.messageConfirmDialog}?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Si" type="button"
+									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+							</p:confirmDialog>
+						</f:facet>
+
+					</p:toolbar>
+					<p:dataTable id="table-colegio" var="colegio"
+						value="#{colegioView.colegios}" rows="5" paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+						rowsPerPageTemplate="5,10,15" selectionMode="single"
+						rowKey="#{colegio.id}" style="#{colegioView.styleTableColegio}"
+						emptyMessage="No hay colegios encontrados"
+						widgetVar="colegiosTable">
+						<p:ajax event="rowSelect" listener="#{colegioView.selectColegio}"
+							update="@form" />
+						<p:ajax event="rowUnselect"
+							listener="#{colegioView.unselectColegio}" update="@form" />
+
+						<p:column filterBy="#{colegio.codigo}" headerText="Código"
+							filterMatchMode="startsWith" priority="1">
+							<h:outputText value="#{colegio.codigo}" />
+						</p:column>
+
+						<p:column filterBy="#{colegio.nombre}" headerText="Nombre">
+							<h:outputText value="#{colegio.nombre}" />
+						</p:column>
+
+						<p:column filterBy="#{colegio.direccion}" headerText="Dirección">
+							<h:outputText value="#{colegio.direccion}" />
+						</p:column>
+
+						<p:column filterBy="#{colegio.departamento}"
+							headerText="Departamento">
+							<h:outputText value="#{colegio.departamento}" />
+						</p:column>
+
+						<p:column filterBy="#{colegio.pais}" headerText="Pais">
+							<h:outputText value="#{colegio.pais}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	<!--<div class="row justify-content-center mt-3">
+			<h:form id="form-table-colegio">
+
+
+			</h:form>
+		</div>-->
+
+
+	<!--FOOTER-->
+	<footer class="bg-dark">
+		<div class="background-overlay-footer text-white text-center">
+			<div class="container p-3 text-white text-center">
+				<div class="row">
+					<div class="col">
+						<p>© 2020 iEduNet Inc. Todos los derechos reservados. Número
+							de patente 7.493.396 y 7.558.853 de Perú. Resto de patentes en
+							trámite.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<a href="www.facebook.com">Información sobre accesibilidad</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--FOOTER-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
+
+	<style type="text/css">
+.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell
+	{
+	text-align: center;
+}
+
+.customPanelGrid .ui-panelgrid-content {
+	align-items: center;
+}
+</style>
+</h:body>
+</html>
